@@ -1,0 +1,8 @@
+---
+templates:
+  - Sample:
+    - Sample
+    - Sample1
+    - SampleFolder:
+      - Sample2:
+        - Sample2
