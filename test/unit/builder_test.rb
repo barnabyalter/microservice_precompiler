@@ -52,14 +52,8 @@ class BuilderTest < Test::Unit::TestCase
     assert_nothing_raised(){ mustache = @precompiler.mustache_build }
     assert((File.exists? "#{@project_root}/dist"), "The build path does not exist")
     assert((File.exists? "#{@project_root}/dist/templates"), "No templates folder found")
-    assert((File.exists? "#{@project_root}/dist/templates/sample.html"), "Lowercase filename not found.")
+    assert((File.exists? "#{@project_root}/dist/templates/sample.html"), "File not found.")
   end
   
-  def test_mustache_downcase
-    #Check that the templates files have been generated as downcase
-    mustache = nil
-    assert_nothing_raised(){ mustache = @precompiler.mustache_build }
-    assert((File.exists? "#{@project_root}/dist/templates/Sample.html"), "Camelcase filename not found.")
-  end
 
 end
