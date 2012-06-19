@@ -3,7 +3,7 @@ require File.expand_path('../lib/microservice_precompiler/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["barnabyalter"]
-  gem.email         = ["barnaby.alter@gmail.com"]
+  gem.email         = ["barnaby.alter@nyu.edu"]
   gem.description   = %q{The microservice precompiler uses a handful of technologies to compile Javascripts and Stylesheets and create HTML pages from templates into a distribution folder ready for deployment. The microservices used are CoffeeScript, SASS and Mustache, compiling and minifying (where possible) into Javascript, CSS and HTML, respectively.}
   gem.summary       = %q{The microservice precompiler uses a handful of technologies to compile Javascripts and Stylesheets and create HTML pages from templates into a distribution folder ready for deployment.}
   gem.homepage      = "https://github.com/barnabyalter/microservice-precompiler"
