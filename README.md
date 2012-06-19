@@ -6,10 +6,10 @@ The SASS is compiled into CSS via Compass; the CoffeeScript is translated to Jav
 
 The gem requires that your project root be a Compass project and expects that you have a folder structure matching the following in the root of your project:
 
-  /javascripts/
-  /sass/
-  /templates/
-  mustaches.yml
+    /javascripts/
+    /sass/
+    /templates/
+    mustaches.yml
 
 Where javascripts contains your Coffee, sass contains your SASS, templates contains a folder structure matching your mustaches.yml file for building out pages from mustache templates. 
 
@@ -31,51 +31,51 @@ Or install it yourself as:
 
 To build all assets and templates into the distribution (./dist by default) folder, you can run the following from your application or rake:
 
-  require 'microservice_precompiler'
-  precompiler = MicroservicePrecompiler::Builder.new
-  precompiler.compile
+    require 'microservice_precompiler'
+    precompiler = MicroservicePrecompiler::Builder.new
+    precompiler.compile
   
 Or with initialize options (the compile boolean option is for downcase, see below):
   
-  require 'microservice_precompiler'
-  precompiler = MicroservicePrecompiler::Builder.new(project_root = File.dirname(__FILE__), build_path = "dist", mustaches_config = "mustaches.yml.tml)
-  precompiler.compile false
+    require 'microservice_precompiler'
+    precompiler = MicroservicePrecompiler::Builder.new(project_root = File.dirname(__FILE__), build_path = "dist", mustaches_config = "mustaches.yml.tml)
+    precompiler.compile false
   
 This runs all the precompiling options. Each can also be invoked individually:
 
-  # Clears the dist folder and sass cache files
-  precompiler.cleanup
-  # Runs the Compass build, which sends SASS to cachs
-  precompiler.compass_build
-  # Runs the Sprockets build which compiles CoffeeScript, minifies assets and moves to dist folder
-  precompiler.sprockets_build
+    # Clears the dist folder and sass cache files
+    precompiler.cleanup
+    # Runs the Compass build, which sends SASS to cachs
+    precompiler.compass_build
+    # Runs the Sprockets build which compiles CoffeeScript, minifies assets and moves to dist folder
+    precompiler.sprockets_build
   
 The mustache builder takes an optional argument, downcase, which tells it whether to write the output files in lowercase with underscores (the default) or keep them as the original files:
 
-  # Keep output files the same as input files
-  precompiler.mustache_build false
-  # Make all output files lowercase with underscores instead of spaces, default
-  precompiler.mustache_build true
+    # Keep output files the same as input files
+    precompiler.mustache_build false
+    # Make all output files lowercase with underscores instead of spaces, default
+    precompiler.mustache_build true
 
 ### SASS and CoffeeScript
 
 These two parts are pretty simple. They are contained within their relevant directories and are written in their respective technologies. Because Sprockets is used to compile them the folders may contain subfolders which are automatically included in-line if the following line is present in a top-level file (where dependencies is the name of the subfolder you wish to include):
 
-  /*
-   *=require_tree ./dependencies
-   */
+    /*
+     *=require_tree ./dependencies
+     */
 
 ### Mustache templating
 
 The mustache builder requires you to provide a template file and a logic file from which to build the template. You can create a complex folder structure in the templates directory as long as it's logic is matched in the mustaches.yml config file. An example of the mustaches.yml follows:
 
-  templates:
-    - Sample:
-      - Sample
-      - Sample1
-      - SampleFolder:
-        - Sample2:
-          - Sample2
+    templates:
+      - Sample:
+        - Sample
+        - Sample1
+        - SampleFolder:
+          - Sample2:
+            - Sample2
 
 * By default, camelcase in the yaml file is translated to lowercase with underscores unless specified, see initializing options above.
 * The top level is the directory you are building from. Multiple directories will work as well.
