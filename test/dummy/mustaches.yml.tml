@@ -4,5 +4,5 @@ templates:
     - Sample
     - Sample1
     - SampleFolder:
-      - Sample2:
-        - Sample2
+      - SampleFolderTest
+    - sample_with_underscore

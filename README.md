@@ -38,7 +38,10 @@ To build all assets and templates into the distribution (./dist by default) fold
 Or with initialize options (the compile boolean option is for downcase, see below):
   
     require 'microservice_precompiler'
-    precompiler = MicroservicePrecompiler::Builder.new(project_root = File.dirname(__FILE__), build_path = "dist", mustaches_config = "mustaches.yml.tml)
+    precompiler = MicroservicePrecompiler::Builder.new
+    precompiler.project_root = "."
+    precompiler.build_path = "dist"
+    precompiler.mustaches_config = "mustaches.yml"
     precompiler.compile false
   
 This runs all the precompiling options. Each can also be invoked individually:

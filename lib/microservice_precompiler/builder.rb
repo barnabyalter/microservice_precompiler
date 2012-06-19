@@ -2,12 +2,12 @@ module MicroservicePrecompiler
   class Builder
     attr_accessor :project_root, :build_path, :mustaches_config
     
-    def initialize project_root = File.dirname(__FILE__), build_path = "dist", mustaches_config = "mustaches.yml.tml"
+    def initialize project_root = ".", build_path = "dist", mustaches_config = "mustaches.yml.tml"
       @project_root = project_root
       @build_path = File.join(@project_root, build_path)
       @mustaches_config = mustaches_config
     end
-  
+
     def compile downcase = true
       self.cleanup
       self.compass_build
@@ -101,10 +101,9 @@ module MicroservicePrecompiler
     end
       
     def mustache_template_build dir, downcase, template_file, logic_file
-      logic_class_name = logic_file
+      logic_class_name = underscore_to_camelcase(logic_file)
       logic_file = camelcase_to_underscore(logic_file)
       output_file = (downcase.eql? true) ? logic_file : logic_class_name
-      dir = camelcase_to_underscore(dir) if downcase
       # Require logic file, used to generate content from template
       require File.join(@project_root, dir, logic_file)
       # Create relevant directory path
@@ -118,10 +117,16 @@ module MicroservicePrecompiler
       File.open(build_file, 'w') do |f|
         f.write(mustache.render)
       end
-    end        
-
+    end 
+    
     def camelcase_to_underscore camelcase_string
       camelcase_string.gsub(/(.)([A-Z])/,'\1_\2').downcase  
+    end
+    
+    def underscore_to_camelcase underscore_string
+      underscore_string = underscore_string.gsub(/(_)/,' ').split(' ').each { |word| word.capitalize! }.join("") unless underscore_string.match(/_/).nil?
+      underscore_string = underscore_string if underscore_string.match(/_/).nil?
+      return underscore_string
     end
     
     def sprockets_env
