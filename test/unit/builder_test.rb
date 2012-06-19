@@ -58,7 +58,7 @@ class BuilderTest < Test::Unit::TestCase
   def test_mustache_downcase
     #Check that the templates files have been generated as downcase
     mustache = nil
-    assert_nothing_raised(){ mustache = @precompiler.mustache_build(false) }
+    assert_nothing_raised(){ mustache = @precompiler.mustache_build }
     assert((File.exists? "#{@project_root}/dist/templates/Sample.html"), "Camelcase filename not found.")
   end
 

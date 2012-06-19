@@ -8,11 +8,11 @@ module MicroservicePrecompiler
       @mustaches_config = mustaches_config
     end
 
-    def compile downcase = true
+    def compile
       self.cleanup
       self.compass_build
       self.sprockets_build
-      self.mustache_build downcase
+      self.mustache_build
     end
   
     def cleanup sprocket_assets = [:javascripts, :stylesheets]
@@ -60,23 +60,23 @@ module MicroservicePrecompiler
     end
     alias_method :sprockets, :sprockets_build
     
-    def mustache_build downcase = true
+    def mustache_build
       mustaches_config_file = "#{@project_root}/#{@mustaches_config}"
       if File.exists?(mustaches_config_file)
         # Load up file as a hash
         mustaches_config = YAML.load_file(mustaches_config_file)
         if mustaches_config.is_a? Hash
-          mustache_build_folder_structure(mustaches_config, downcase)
+          mustache_build_folder_structure(mustaches_config)
         end
       end
     end
     alias_method :mustache, :mustache_build
         
     private
-    def mustache_build_folder_structure mustaches_config, downcase, parent = ""
+    def mustache_build_folder_structure mustaches_config, parent = ""
       # Loop through each directory matched to a set of mustache classes/subclasses
       mustaches_config.each do |dir, mustaches|
-        dir = (parent.eql? "") ? "#{dir}" : "#{parent}/#{camelcase_to_underscore(dir)}"
+        dir = (parent.eql? "") ? "#{dir}" : "#{parent}/#{dir}"
        
         mustaches.each do |mustache|
           # Get the name of the template class
@@ -88,22 +88,22 @@ module MicroservicePrecompiler
             mustache[template_class].each do |logic_file|
               if logic_file.is_a? Hash
                 # If the logic file is an array, then treat it like a folder and recurs
-                mustache_build_folder_structure(logic_file, downcase, dir)
+                mustache_build_folder_structure(logic_file, dir)
               else
-                mustache_template_build(dir, downcase, template_file, logic_file)
+                mustache_template_build(dir, template_file, logic_file)
               end
             end
           else
-            mustache_template_build(dir, downcase, template_file, template_class)
+            mustache_template_build(dir, template_file, template_class)
           end
         end
       end  
     end
       
-    def mustache_template_build dir, downcase, template_file, logic_file
+    def mustache_template_build dir, template_file, logic_file
       logic_class_name = underscore_to_camelcase(logic_file)
+      output_file = logic_file #Output file should match the syntax of the mustaches config
       logic_file = camelcase_to_underscore(logic_file)
-      output_file = (downcase.eql? true) ? logic_file : logic_class_name
       # Require logic file, used to generate content from template
       require File.join(@project_root, dir, logic_file)
       # Create relevant directory path

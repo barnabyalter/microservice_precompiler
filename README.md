@@ -35,14 +35,14 @@ To build all assets and templates into the distribution (./dist by default) fold
     precompiler = MicroservicePrecompiler::Builder.new
     precompiler.compile
   
-Or with initialize options (the compile boolean option is for downcase, see below):
+Or with initialize options:
   
     require 'microservice_precompiler'
     precompiler = MicroservicePrecompiler::Builder.new
     precompiler.project_root = "."
     precompiler.build_path = "dist"
     precompiler.mustaches_config = "mustaches.yml"
-    precompiler.compile false
+    precompiler.compile
   
 This runs all the precompiling options. Each can also be invoked individually:
 
@@ -52,14 +52,9 @@ This runs all the precompiling options. Each can also be invoked individually:
     precompiler.compass_build
     # Runs the Sprockets build which compiles CoffeeScript, minifies assets and moves to dist folder
     precompiler.sprockets_build
+    # Runs the Mustache template build, which creates output files with the same syntax from the mustaches config yaml
+     precompiler.mustache_build
   
-The mustache builder takes an optional argument, downcase, which tells it whether to write the output files in lowercase with underscores (the default) or keep them as the original files:
-
-    # Keep output files the same as input files
-    precompiler.mustache_build false
-    # Make all output files lowercase with underscores instead of spaces, default
-    precompiler.mustache_build true
-
 ### SASS and CoffeeScript
 
 These two parts are pretty simple. They are contained within their relevant directories and are written in their respective technologies. Because Sprockets is used to compile them the folders may contain subfolders which are automatically included in-line if the following line is present in a top-level file (where dependencies is the name of the subfolder you wish to include):
@@ -79,13 +74,16 @@ The mustache builder requires you to provide a template file and a logic file fr
         - SampleFolder:
           - Sample2:
             - Sample2
+        - SampleFolder:
+          - Sample2
+        - sample_with_underscore
 
-* By default, camelcase in the yaml file is translated to lowercase with underscores unless specified, see initializing options above.
+* The case of the files is preserved from the mustaches config yaml. However, files like the above 'sample_with_underscore' are assumed to contain a class SampleWithUnderscore since this is the standard ruby practice.
 * The top level is the directory you are building from. Multiple directories will work as well.
 * The top level directory contains an array of template names, each of which is a hash of logic files to use the template.
 ** For example, Sample and Sample1 are two logic files which implement a mustache template called Sample.
 * If one of the logic files is itself a hash it is assumed to be a directory. The mustache builder will treat this the same as the top level directory, reading the array of template file hashes with their array of logic files.
-** In the above example, SampleFolder is a folder called sample_folder which contains a mustache template called Sample2 and a logic file Sample2 which implements the template Sample2.
+** In the above example, SampleFolder is a folder which contains a mustache template called Sample2 and a logic file Sample2 which implements the template Sample2. The following SampleFolder with only Sample2 beneath is does the same thing.
 
 ## Contributing
 
