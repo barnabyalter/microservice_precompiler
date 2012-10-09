@@ -1,7 +1,7 @@
 # MicroservicePrecompiler
 
 [![Dependency Status](https://gemnasium.com/barnabyalter/microservice_precompiler.png)](https://gemnasium.com/barnabyalter/microservice_precompiler)
-{<img src="https://codeclimate.com/badge.png" />}[https://codeclimate.com/github/barnabyalter/microservice_precompiler]
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/barnabyalter/microservice_precompiler)
 
 The microservice precompiler uses a handful of technologies to compile Javascripts and Stylesheets and create HTML pages from templates into a distribution folder ready for deployment. The microservices used are CoffeeScript, SASS and Mustache, compiling and minifying (where possible) into Javascript, CSS and HTML, respectively.
 
