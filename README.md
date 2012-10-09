@@ -1,5 +1,8 @@
 # MicroservicePrecompiler
 
+[![Dependency Status](https://gemnasium.com/barnabyalter/microservice_precompiler.png)](https://gemnasium.com/barnabyalter/microservice_precompiler)
+{<img src="https://codeclimate.com/badge.png" />}[https://codeclimate.com/github/barnabyalter/microservice_precompiler]
+
 The microservice precompiler uses a handful of technologies to compile Javascripts and Stylesheets and create HTML pages from templates into a distribution folder ready for deployment. The microservices used are CoffeeScript, SASS and Mustache, compiling and minifying (where possible) into Javascript, CSS and HTML, respectively.
 
 The SASS is compiled into CSS via Compass; the CoffeeScript is translated to Javascript via Sprockets; both CSS and JS have their dependency trees included in-file by Sprockets; CSS and JS are then minified and compressed via YUICompressor and Uglifier, respectively. 
