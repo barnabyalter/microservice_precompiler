@@ -105,22 +105,22 @@ module MicroservicePrecompiler
       output_file = logic_file #Output file should match the syntax of the mustaches config
       logic_file = camelcase_to_underscore(logic_file)
       # Require logic file, used to generate content from template
-      require File.join(@project_root, dir, logic_file)
+      require File.join(@project_root, camelcase_to_underscore(dir), logic_file)
       # Create relevant directory path
       FileUtils.mkdir_p File.join(@build_path, dir.to_s)
       # Instantiate class from required file
       mustache = Kernel.const_get(logic_class_name).new
-      # Set the template file
-      mustache.template_file = File.join(@project_root, dir, template_file) + ".html.mustache"
+      # Set the template fil
+      mustache.template_file = File.join(@project_root, camelcase_to_underscore(dir), template_file) + ".html.mustache"
       # Get the name of the file we will write to after it's template is processed
       build_file = File.join(@build_path, dir, "#{output_file}.html")
       File.open(build_file, 'w') do |f|
         f.write(mustache.render)
-      end
+      end 
     end 
     
     def camelcase_to_underscore camelcase_string
-      camelcase_string.gsub(/(.)([A-Z])/,'\1_\2').downcase  
+      return camelcase_string.gsub(/([A-Za-z0-9])([A-Z])/,'\1_\2').downcase
     end
     
     def underscore_to_camelcase underscore_string

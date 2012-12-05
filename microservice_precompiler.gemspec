@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   
   #gem.add_development_dependency "rspec", "~> 2.6"
   gem.add_development_dependency "rake"
+  gem.add_development_dependency "debugger"
   gem.add_dependency "compass", "~> 0.12.1"
   gem.add_dependency "sprockets", "~> 2.4.0"
   gem.add_dependency "uglifier", "~> 1.2.4"

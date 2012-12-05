@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'ruby-debug'
 require 'test_helper'
 
 class BuilderTest < Test::Unit::TestCase
