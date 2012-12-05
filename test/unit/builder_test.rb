@@ -54,7 +54,7 @@ class BuilderTest < Test::Unit::TestCase
     assert_nothing_raised(){ mustache = @precompiler.mustache_build }
     assert((File.exists? "#{@project_root}/dist"), "The build path does not exist")
     assert((File.exists? "#{@project_root}/dist/templates"), "No templates folder found")
-    assert((File.exists? "#{@project_root}/dist/templates/sample.html"), "File not found.")
+    assert((File.exists? "#{@project_root}/dist/templates/Sample.html"), "File not found.")
   end
   
 
