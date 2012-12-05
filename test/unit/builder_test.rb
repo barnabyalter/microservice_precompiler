@@ -43,7 +43,8 @@ class BuilderTest < Test::Unit::TestCase
     assert((File.exists? "#{@project_root}/dist"), "The build path does not exist")
     assert((File.exists? "#{@project_root}/dist/stylesheets"), "No stylesheets folder found, sprockets build failed")
     #Check that the files in stylesheets are minimized
-    assert((File.size("#{@project_root}/stylesheets") > File.size("#{@project_root}/dist/stylesheets")), "Stylesheets were not minimized")
+    debugger
+    assert((File.size("#{@project_root}/stylesheets") > File.size("#{@project_root}/dist/stylesheets")), "Stylesheets were not minimized. \n#{@project_root}/stylesheets: #{File.size("#{@project_root}/stylesheets")}\n#{@project_root}/dist/stylesheets: #{File.size("#{@project_root}/dist/stylesheets")}")
     assert((File.exists? "#{@project_root}/dist/javascripts"), "No javascripts folder found, sprockets build failed")
     #Check that the files in javascripts are minimized
     assert((File.size("#{@project_root}/javascripts") > File.size("#{@project_root}/dist/javascripts")), "Javascripts were not minimized")
