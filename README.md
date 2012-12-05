@@ -1,5 +1,6 @@
 # MicroservicePrecompiler
 
+[![Build Status](https://secure.travis-ci.org/barnabyalter/microservices_precompiler.png)](https://travis-ci.org/barnabyalter/microservices_precompiler)
 [![Dependency Status](https://gemnasium.com/barnabyalter/microservice_precompiler.png)](https://gemnasium.com/barnabyalter/microservice_precompiler)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/barnabyalter/microservice_precompiler)
 
@@ -9,7 +10,7 @@ The SASS is compiled into CSS via Compass; the CoffeeScript is translated to Jav
 
 The gem requires that your project root be a Compass project and expects that you have a folder structure matching the following in the root of your project:
 
-    /javascripts/
+    /javascripts/ 
     /sass/
     /templates/
     mustaches.yml

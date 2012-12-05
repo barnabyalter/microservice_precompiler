@@ -1,3 +1,3 @@
 module MicroservicePrecompiler
-  VERSION = "0.1.1v"
+  VERSION = "0.1.1"
 end
