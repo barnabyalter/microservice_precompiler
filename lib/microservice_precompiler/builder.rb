@@ -48,9 +48,9 @@ module MicroservicePrecompiler
           if File.file?(file)
             asset = sprockets_env[filename]
             attributes = sprockets_env.attributes_for(asset.pathname)
-            build_file = File.join(@build_path, asset_type.to_s, attributes.logical_path)
+            build_file = File.join(@build_path, asset_type.to_s, attributes.logical_path) # Logical path is the filename
             File.open(build_file, 'w') do |f|
-              f.write(minify(asset, attributes.format_extension))
+              f.write(minify(asset, attributes.format_extension)) # Format extension is self-explanatory I believe... the format e.g. js, css ,etc.
             end
           end
         end
