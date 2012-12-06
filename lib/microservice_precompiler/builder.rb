@@ -45,14 +45,12 @@ module MicroservicePrecompiler
         sprockets_env.append_path load_path
         Dir.new(load_path).each do |filename|
           file = File.join(load_path, filename)
-          if File.exists?(file) and File.file?(file)
+          if File.file?(file)
             asset = sprockets_env[filename]
             attributes = sprockets_env.attributes_for(asset.pathname)
-            name, format = attributes.logical_path, attributes.format_extension
-            asset = minify(asset, format)
-            build_file = File.join(@build_path, asset_type.to_s, name)
+            build_file = File.join(@build_path, asset_type.to_s, attributes.logical_path)
             File.open(build_file, 'w') do |f|
-              f.write(asset)
+              f.write(minify(asset, attributes.format_extension))
             end
           end
         end
@@ -134,7 +132,7 @@ module MicroservicePrecompiler
       @sprockets_env ||= Sprockets::Environment.new(@project_root) { |env| env.logger = Logger.new(STDOUT) }
     end
     
-    def minify(asset, format)
+    def minify asset, format
       asset = asset.to_s
       # Minify JS
       return Uglifier.compile(asset) if format.eql?(".js")

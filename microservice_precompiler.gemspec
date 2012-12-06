@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake"
   gem.add_development_dependency "debugger"
   gem.add_development_dependency "travis-lint"
+  gem.add_development_dependency "reek"
   gem.add_dependency "compass", "~> 0.12.1"
   gem.add_dependency "sprockets", "~> 2"#"~> 2.4.0"
   gem.add_dependency "uglifier", "~> 1"#"~> 1.2.4"
