@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Microservice precompiler by barnabyalter</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Microservice precompiler</h1>
+        <p class="header">Compiles Javascripts and Stylesheets and creates HTML pages from templates into a distribution folder ready for deployment.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/barnabyalter/microservice_precompiler/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/barnabyalter/microservice_precompiler/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/barnabyalter/microservice_precompiler">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/barnabyalter">barnabyalter</a></p>
+
+
+      </header>
+      <section>
+        <h1>MicroservicePrecompiler</h1>
+
+<p><a href="https://travis-ci.org/barnabyalter/microservices_precompiler"><img src="https://api.travis-ci.org/barnabyalter/microservice_precompiler.png" alt="Build Status"></a>
+<a href="https://gemnasium.com/barnabyalter/microservice_precompiler"><img src="https://gemnasium.com/barnabyalter/microservice_precompiler.png" alt="Dependency Status"></a>
+<a href="https://codeclimate.com/github/barnabyalter/microservice_precompiler"><img src="https://codeclimate.com/badge.png" alt="Code Climate"></a></p>
+
+<p>The microservice precompiler uses a handful of technologies to compile Javascripts and Stylesheets and create HTML pages from templates into a distribution folder ready for deployment. The microservices used are CoffeeScript, SASS and Mustache, compiling and minifying (where possible) into Javascript, CSS and HTML, respectively.</p>
+
+<p>The SASS is compiled into CSS via Compass; the CoffeeScript is translated to Javascript via Sprockets; both CSS and JS have their dependency trees included in-file by Sprockets; CSS and JS are then minified and compressed via YUICompressor and Uglifier, respectively. </p>
+
+<p>The gem requires that your project root be a Compass project and expects that you have a folder structure matching the following in the root of your project:</p>
+
+<pre><code>/javascripts/ 
+/sass/
+/templates/
+mustaches.yml
+</code></pre>
+
+<p>Where javascripts contains your Coffee, sass contains your SASS, templates contains a folder structure matching your mustaches.yml file for building out pages from mustache templates. </p>
+
+<h2>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'microservice_precompiler'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install microservice_precompiler
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>To build all assets and templates into the distribution (./dist by default) folder, you can run the following from your application or rake:</p>
+
+<pre><code>require 'microservice_precompiler'
+precompiler = MicroservicePrecompiler::Builder.new
+precompiler.compile
+</code></pre>
+
+<p>Or with initialize options:</p>
+
+<pre><code>require 'microservice_precompiler'
+precompiler = MicroservicePrecompiler::Builder.new
+precompiler.project_root = "."
+precompiler.build_path = "dist"
+precompiler.mustaches_config = "mustaches.yml"
+precompiler.compile
+</code></pre>
+
+<p>This runs all the precompiling options. Each can also be invoked individually:</p>
+
+<pre><code># Clears the dist folder and sass cache files
+precompiler.cleanup
+# Runs the Compass build, which sends SASS to cachs
+precompiler.compass_build
+# Runs the Sprockets build which compiles CoffeeScript, minifies assets and moves to dist folder
+precompiler.sprockets_build
+# Runs the Mustache template build, which creates output files with the same syntax from the mustaches config yaml
+ precompiler.mustache_build
+</code></pre>
+
+<h3>SASS and CoffeeScript</h3>
+
+<p>These two parts are pretty simple. They are contained within their relevant directories and are written in their respective technologies. Because Sprockets is used to compile them the folders may contain subfolders which are automatically included in-line if the following line is present in a top-level file (where dependencies is the name of the subfolder you wish to include):</p>
+
+<pre><code>/*
+ *=require_tree ./dependencies
+ */
+</code></pre>
+
+<h3>Mustache templating</h3>
+
+<p>The mustache builder requires you to provide a template file and a logic file from which to build the template. You can create a complex folder structure in the templates directory as long as it's logic is matched in the mustaches.yml config file. An example of the mustaches.yml follows:</p>
+
+<pre><code>templates:
+  - Sample:
+    - Sample
+    - Sample1
+    - SampleFolder:
+      - Sample2:
+        - Sample2
+    - SampleFolder:
+      - Sample2
+    - sample_with_underscore
+</code></pre>
+
+<ul>
+<li>The case of the files is preserved from the mustaches config yaml. However, files like the above 'sample_with_underscore' are assumed to contain a class SampleWithUnderscore since this is the standard ruby practice.</li>
+<li>The top level is the directory you are building from. Multiple directories will work as well.</li>
+<li>The top level directory contains an array of template names, each of which is a hash of logic files to use the template.
+** For example, Sample and Sample1 are two logic files which implement a mustache template called Sample.</li>
+<li>If one of the logic files is itself a hash it is assumed to be a directory. The mustache builder will treat this the same as the top level directory, reading the array of template file hashes with their array of logic files.
+** In the above example, SampleFolder is a folder which contains a mustache template called Sample2 and a logic file Sample2 which implements the template Sample2. The following SampleFolder with only Sample2 beneath is does the same thing.</li>
+</ul><h2>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Added some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
