@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.version       = MicroservicePrecompiler::VERSION
   
   #gem.add_development_dependency "rspec", "~> 2.6"
-  gem.add_development_dependency "rake"
+  gem.add_dependency "rake", "~> 10.0.2"
   gem.add_development_dependency "debugger"
   gem.add_development_dependency "travis-lint"
   gem.add_development_dependency "reek"
