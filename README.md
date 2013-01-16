@@ -1,6 +1,6 @@
 # MicroservicePrecompiler
 
-[![Build Status](https://api.travis-ci.org/barnabyalter/microservice_precompiler.png)](https://travis-ci.org/barnabyalter/microservices_precompiler)
+[![Build Status](https://api.travis-ci.org/barnabyalter/microservice_precompiler.png)](https://travis-ci.org/barnabyalter/microservice_precompiler)
 [![Dependency Status](https://gemnasium.com/barnabyalter/microservice_precompiler.png)](https://gemnasium.com/barnabyalter/microservice_precompiler)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/barnabyalter/microservice_precompiler)
 
