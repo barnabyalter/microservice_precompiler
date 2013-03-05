@@ -2,7 +2,9 @@
 
 [![Build Status](https://api.travis-ci.org/barnabyalter/microservice_precompiler.png)](https://travis-ci.org/barnabyalter/microservice_precompiler)
 [![Dependency Status](https://gemnasium.com/barnabyalter/microservice_precompiler.png)](https://gemnasium.com/barnabyalter/microservice_precompiler)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/barnabyalter/microservice_precompiler)
+[![Code Climate](https://codeclimate.com/github/barnabyalter/microservice_precompiler.png)](https://codeclimate.com/github/barnabyalter/microservice_precompiler)
+[![Gem Version](https://badge.fury.io/rb/microservice_precompiler.png)](http://badge.fury.io/rb/microservice_precompiler)
+[![Coverage Status](https://coveralls.io/repos/barnabyalter/microservice_precompiler/badge.png?branch=master)](https://coveralls.io/r/barnabyalter/microservice_precompiler)
 
 The microservice precompiler uses a handful of technologies to compile Javascripts and Stylesheets and create HTML pages from templates into a distribution folder ready for deployment. The microservices used are CoffeeScript, SASS and Mustache, compiling and minifying (where possible) into Javascript, CSS and HTML, respectively.
 
