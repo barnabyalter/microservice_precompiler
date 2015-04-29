@@ -16,7 +16,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = MicroservicePrecompiler::VERSION
 
-  gem.add_dependency "rake", "~> 10.0.2"
   gem.add_dependency "compass", "~> 1.0.0"
   gem.add_dependency "sprockets", "~> 3.0.0"
   gem.add_dependency "uglifier", "~> 2.7.1"
