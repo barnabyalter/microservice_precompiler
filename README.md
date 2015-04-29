@@ -6,50 +6,48 @@
 [![Gem Version](https://badge.fury.io/rb/microservice_precompiler.png)](http://badge.fury.io/rb/microservice_precompiler)
 [![Coverage Status](https://coveralls.io/repos/barnabyalter/microservice_precompiler/badge.png?branch=master)](https://coveralls.io/r/barnabyalter/microservice_precompiler)
 
-The microservice precompiler uses a handful of technologies to compile Javascripts and Stylesheets and create HTML pages from templates into a distribution folder ready for deployment. The microservices used are CoffeeScript, SASS and Mustache, compiling and minifying (where possible) into Javascript, CSS and HTML, respectively.
+The microservice precompiler uses a handful of technologies to compile Javascripts and Stylesheets and create HTML pages from templates into a distribution folder ready for deployment. The so-called "microservices" used are CoffeeScript, SASS and Mustache, compiling and minifying (where possible) into Javascript, CSS and HTML, respectively.
 
-The SASS is compiled into CSS via Compass; the CoffeeScript is translated to Javascript via Sprockets; both CSS and JS have their dependency trees included in-file by Sprockets; CSS and JS are then minified and compressed via YUICompressor and Uglifier, respectively. 
+The SASS (or SCSS) is compiled into CSS via Compass; the CoffeeScript is translated to Javascript via Sprockets; both CSS and JS have their dependency trees included in-file by Sprockets; CSS and JS are then minified and compressed via YUICompressor and Uglifier, respectively.
 
 The gem requires that your project root be a Compass project and expects that you have a folder structure matching the following in the root of your project:
 
-    /javascripts/ 
-    /sass/
-    /templates/
+    javascripts/
+    sass/
+    templates/
     mustaches.yml
 
-Where javascripts contains your Coffee, sass contains your SASS, templates contains a folder structure matching your mustaches.yml file for building out pages from mustache templates. 
+Where javascripts/ contains your Coffee, sass/ contains your SASS, and templates contains a folder structure matching your mustaches.yml file for building out pages from mustache templates (see below).
 
 ## Installation
 
-Add this line to your application's Gemfile:
+To use with bundler add this to your Gemfile:
 
     gem 'microservice_precompiler'
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Or install it yourself:
 
     $ gem install microservice_precompiler
 
 ## Usage
 
-To build all assets and templates into the distribution (./dist by default) folder, you can run the following from your application or rake:
+To build all assets and templates into the distribution (./dist by default) folder:
 
-    require 'microservice_precompiler'
-    precompiler = MicroservicePrecompiler::Builder.new
-    precompiler.compile
-  
+```ruby
+require 'microservice_precompiler'
+precompiler = MicroservicePrecompiler::Builder.new
+precompiler.compile
+```
+
 Or with initialize options:
-  
+
     require 'microservice_precompiler'
     precompiler = MicroservicePrecompiler::Builder.new
     precompiler.project_root = "."
     precompiler.build_path = "dist"
-    precompiler.mustaches_config = "mustaches.yml"
+    precompiler.mustaches_filename = "mustaches.yml"
     precompiler.compile
-  
+
 This runs all the precompiling options. Each can also be invoked individually:
 
     # Clears the dist folder and sass cache files
@@ -60,14 +58,16 @@ This runs all the precompiling options. Each can also be invoked individually:
     precompiler.sprockets_build
     # Runs the Mustache template build, which creates output files with the same syntax from the mustaches config yaml
      precompiler.mustache_build
-  
+
 ### SASS and CoffeeScript
 
 These two parts are pretty simple. They are contained within their relevant directories and are written in their respective technologies. Because Sprockets is used to compile them the folders may contain subfolders which are automatically included in-line if the following line is present in a top-level file (where dependencies is the name of the subfolder you wish to include):
 
-    /*
-     *=require_tree ./dependencies
-     */
+```coffee
+/*
+ *=require_tree ./dependencies
+ */
+```
 
 ### Mustache templating
 
@@ -101,4 +101,3 @@ The mustache builder requires you to provide a template file and a logic file fr
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/barnabyalter/microservice_precompiler/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
