@@ -19,3 +19,6 @@ tmp
 test/dummy/.sass-cache
 test/dummy/stylesheets
 test/dummy/dist
+test/dummy/images
+.ruby-version
+.sass-cache
