@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "compass", "~> 1.0.0"
   gem.add_dependency "sprockets", "~> 3.0.0"
   gem.add_dependency "uglifier", "~> 2.7.1"
-  gem.add_dependency "mustache", "~> 1.0.0"
+  gem.add_dependency "mustache", ">= 0.99.4"
   gem.add_dependency "yui-compressor", "~> 0.12.0"
   gem.add_dependency "coffee-script", "~> 2.4.0"
 end
