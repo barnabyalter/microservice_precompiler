@@ -4,8 +4,20 @@ module MicroservicePrecompiler
 
     def initialize(project_root = ".", build_path = "dist", mustaches_filename = "mustaches.yml.tml")
       @project_root = project_root
-      @build_path = File.join(@project_root, build_path)
+      # Compare project and build path without trailing slash,
+      # they cannot be the same else `cleanup` will wipe the current directory
+      if project_root.chomp("/") == build_path.chomp("/")
+        raise ArgumentError, "project_root and build_path cannot be the same"
+      end
+      @build_path = File.join(project_root, build_path)
       @mustaches_filename = mustaches_filename
+    end
+
+    def build_path=(build_path)
+      if project_root.chomp("/") == build_path.chomp("/")
+        raise ArgumentError, "project_root and build_path cannot be the same"
+      end
+      @build_path = build_path
     end
 
     # Convenience method runs all the compilation tasks in order
@@ -156,9 +168,11 @@ module MicroservicePrecompiler
     def minify(asset, format)
       asset = asset.to_s
       # Minify JS
-      return Uglifier.compile(asset) if format.eql?(".js")
+      return Uglifier.compile(asset) if format.eql?("js")
       # Minify CSS
-      return YUI::CssCompressor.new.compress(asset) if format.eql?(".css")
+      return YUI::CssCompressor.new.compress(asset) if format.eql?("css")
+      # Return string representation if not minimizing
+      return asset
     end
 
     # Get the mustache config file with fullpath
