@@ -157,9 +157,8 @@ module MicroservicePrecompiler
       asset = asset.to_s
       # Minify JS
       return Uglifier.compile(asset) if format.eql?("js")
-      # CSS COMPRESSOR NOT NEEDED AS IT IS ALREADY COMPACT
       # Minify CSS
-      #return YUI::CssCompressor.new.compress(asset) if format.eql?(".css")
+      return YUI::CssCompressor.new.compress(asset) if format.eql?("css")
     end
 
     # Get the mustache config file with fullpath
