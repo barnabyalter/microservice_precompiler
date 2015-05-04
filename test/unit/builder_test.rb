@@ -1,4 +1,4 @@
- require 'rubygems'
+require 'rubygems'
 require 'test_helper'
 
 class BuilderTest < Test::Unit::TestCase
