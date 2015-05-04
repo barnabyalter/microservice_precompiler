@@ -18,9 +18,7 @@ class BuilderTest < Test::Unit::TestCase
     assert_equal(precompiler.build_path, @project_root + "/dist")
     assert_not_nil(precompiler.mustaches_filename)
     assert_equal(precompiler.mustaches_filename, "mustaches.yml.tml")
-    assert_raises(ArgumentError){ precompiler.build_path = @project_root }
     assert_raises(ArgumentError){ precompiler = MicroservicePrecompiler::Builder.new(".", "./") }
-
   end
 
   def test_cleanup
@@ -58,6 +56,27 @@ class BuilderTest < Test::Unit::TestCase
     assert((File.exists? "#{@project_root}/dist"), "The build path does not exist")
     assert((File.exists? "#{@project_root}/dist/templates"), "No templates folder found")
     assert((File.exists? "#{@project_root}/dist/templates/Sample.html"), "File not found.")
+  end
+
+  def test_build_path
+    assert_nothing_raised(){ @precompiler.build_path = "./dist" }
+    assert_raises(ArgumentError){ @precompiler.build_path = @project_root }
+  end
+
+  def test_compile
+    assert_nothing_raised(){ mustache = @precompiler.compile }
+    assert((File.exists? "#{@project_root}/dist"), "The build path does not exist")
+    assert((File.exists? "#{@project_root}/dist/javascripts"), "No javascripts folder found")
+    assert((File.exists? "#{@project_root}/dist/stylesheets"), "No stylesheets folder found")
+    assert((File.exists? "#{@project_root}/dist/templates"), "No templates folder found")
+  end
+
+  def test_method_missing
+    assert_raises(NoMethodError) { @precompiler.no_method }
+  end
+
+  def test_minify
+    assert_equal(@precompiler.send(:minify, "Test value to not minimize", "html"), "Test value to not minimize", "Minify did not correctly pass through the test value")
   end
 
 

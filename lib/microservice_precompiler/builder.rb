@@ -84,8 +84,6 @@ module MicroservicePrecompiler
     end
     alias_method :mustache, :mustache_build
 
-  private
-
     def method_missing(method_id, *args)
       if match = matches_file_exists_check?(method_id)
         File.exists?(send(method_id.to_s.gsub(/_exists\?/,"")))
@@ -93,6 +91,8 @@ module MicroservicePrecompiler
         super
       end
     end
+
+  private
 
     # Render mustache into html for complex directory structure
     # Loop through each directory matched to a set of mustache classes/subclasses
