@@ -18,8 +18,8 @@ class BuilderTest < Test::Unit::TestCase
     assert_equal(precompiler.build_path, @project_root + "/dist")
     assert_not_nil(precompiler.mustaches_filename)
     assert_equal(precompiler.mustaches_filename, "mustaches.yml.tml")
-    assert_raise_with_message(ArgumentError, "project_root and build_path cannot be the same"){ precompiler.build_path = @project_root }
-    assert_raise_with_message(ArgumentError, "project_root and build_path cannot be the same"){ precompiler = MicroservicePrecompiler::Builder.new(".", "./") }
+    assert_raises(ArgumentError){ precompiler.build_path = @project_root }
+    assert_raises(ArgumentError){ precompiler = MicroservicePrecompiler::Builder.new(".", "./") }
 
   end
 
