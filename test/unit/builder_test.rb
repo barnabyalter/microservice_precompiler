@@ -18,6 +18,9 @@ class BuilderTest < Test::Unit::TestCase
     assert_equal(precompiler.build_path, @project_root + "/dist")
     assert_not_nil(precompiler.mustaches_filename)
     assert_equal(precompiler.mustaches_filename, "mustaches.yml.tml")
+    assert_raise_with_message(ArgumentError, "project_root and build_path cannot be the same"){ precompiler.build_path = @project_root }
+    assert_raise_with_message(ArgumentError, "project_root and build_path cannot be the same"){ precompiler = MicroservicePrecompiler::Builder.new(".", "./") }
+
   end
 
   def test_cleanup
@@ -45,7 +48,8 @@ class BuilderTest < Test::Unit::TestCase
     assert((File.size("#{@project_root}/stylesheets/screen.css") > File.size("#{@project_root}/dist/stylesheets/screen.css")), "Stylesheets were not minimized.")
     assert((File.exists? "#{@project_root}/dist/javascripts"), "No javascripts folder found, sprockets build failed")
     #Check that the files in javascripts are minimized
-    #TODO
+    assert((File.exists? "#{@project_root}/dist/javascripts/sample.js"), "Compiled javascript not found, sprockets build failed")
+    assert((File.size("#{@project_root}/javascripts/sample.js.coffee") < File.size("#{@project_root}/dist/javascripts/sample.js")), "Javascripts were not minimized.")
   end
 
   def test_mustache_build
