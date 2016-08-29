@@ -17,7 +17,9 @@ Gem::Specification.new do |gem|
   gem.version       = MicroservicePrecompiler::VERSION
 
   gem.add_dependency 'compass', '~> 1.0', '>= 1.0.0'
-  gem.add_dependency 'sprockets', '>= 3.0.0'
+  # sprockets-3.3.5 no longer supports Ruby 2.0.x or 2.1.x
+  # so until this gem drops support for those versions lock it in there
+  gem.add_dependency 'sprockets', '>= 3.0.0', '<= 3.3.4'
   gem.add_dependency 'uglifier', '~> 2.7', '>= 2.7.1'
   gem.add_dependency 'mustache', '>= 0.99.4'
   gem.add_dependency 'yui-compressor', '~> 0.12', '>= 0.12.0'
