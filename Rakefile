@@ -32,6 +32,7 @@ Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
   t.pattern = 'test/**/*_test.rb'
   t.verbose = false
+  t.ruby_opts << ["-W1"]
 end
 
 task :default => :test
